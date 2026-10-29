@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SeedShop — Grow Together</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="logo"><span class="leaf">🌿</span><span>SeedShop<small>Grow Together</small></span></div>
+  <nav class="nav">
+    <button data-page="home" class="active">หน้าแรก</button><button data-page="catalog">เมล็ดพันธุ์</button><button data-page="profile">ผู้ขาย</button><button data-page="catalog">บทความ</button>
+  </nav>
+  <label class="search">⌕ <input id="globalSearch" placeholder="ค้นหาเมล็ดพันธุ์..."></label>
+  <button class="iconbtn" data-page="checkout" aria-label="ตะกร้าสินค้า">🛒<span class="count" id="cartCount">0</span></button>
+  <button class="iconbtn" id="accountButton" aria-label="เข้าสู่ระบบ"><span class="avatar" id="accountAvatar">👤</span></button>
+</header>
+
+<main>
+<section id="home" class="page active">
+ <div class="panel">
+  <div class="hero"><div><h1>เมล็ดพันธุ์คุณภาพ<br>เพื่อการเกษตรที่ยั่งยืน</h1><p>เลือกซื้อเมล็ดพันธุ์หลากหลายชนิด<br>จากเกษตรกรและร้านค้าชั้นนำ</p><button class="btn" data-page="catalog">เลือกซื้อเลย　→</button></div></div>
+  <div class="benefits">
+   <div class="benefit"><div class="round">🌱</div><div><b>เมล็ดพันธุ์คุณภาพ</b><small>คัดสรรจากแหล่งที่เชื่อถือได้</small></div></div>
+   <div class="benefit"><div class="round">🚚</div><div><b>จัดส่งทั่วไทย</b><small>รวดเร็ว ปลอดภัย</small></div></div>
+   <div class="benefit"><div class="round">♧</div><div><b>เกษตรกรไทย</b><small>สนับสนุนเกษตรกรไทย</small></div></div>
+   <div class="benefit"><div class="round">▣</div><div><b>ชำระเงินสะดวก</b><small>หลายช่องทาง</small></div></div>
+  </div>
+  <div class="section"><div class="sectionhead"><h2>หมวดหมู่เมล็ดพันธุ์</h2><button class="link" data-page="catalog">ดูทั้งหมด →</button></div><div class="categories" id="categories"></div></div>
+  <div class="section"><div class="sectionhead"><h2>สินค้าแนะนำ</h2><button class="link" data-page="catalog">ดูสินค้าทั้งหมด →</button></div><div class="product-grid" id="featured"></div></div>
+ </div>
+</section>
+
+<section id="catalog" class="page">
+ <div class="panel catalog-layout">
+  <aside class="sidebar"><div><p class="side-title">🌿 หมวดหมู่เมล็ดพันธุ์</p><div id="sideCats"></div><div class="filtergroup"><b>ตัวกรองราคา</b><p><input id="maxPrice" type="range" min="20" max="500" value="500" style="width:100%"><small>ไม่เกิน ฿<span id="maxPriceLabel">500</span></small></p><button class="btn small" id="resetFilters">ล้างตัวกรอง</button></div><div class="filtergroup"><b>ประเภท</b><label><input type="checkbox" id="inStock" checked> มีสินค้าในสต็อก</label></div></div></aside>
+  <div class="catalog-main"><div class="catalog-top"><h2>เมล็ดพันธุ์ทั้งหมด <small class="muted" id="productCount"></small></h2><select id="sortBy"><option value="recommended">เรียงตาม: แนะนำ</option><option value="low">ราคาต่ำไปสูง</option><option value="high">ราคาสูงไปต่ำ</option><option value="rating">คะแนนรีวิว</option></select></div><div class="product-grid" id="catalogProducts"></div></div>
+ </div>
+</section>
+
+<section id="detail" class="page"><div class="panel" id="detailContent"></div></section>
+
+<section id="checkout" class="page"><div class="panel"><div class="sectionhead" style="padding:20px 20px 0"><h2>ตะกร้าสินค้า</h2><span class="muted" id="cartSubtitle"></span></div><div class="checkout-layout"><div class="card"><h3>รายการสินค้า</h3><div id="cartItems"></div><div class="totals"><span>ค่าจัดส่ง</span><b id="shipping">฿ 35</b></div><div class="totals total"><span>รวมทั้งหมด</span><span id="grandTotal">฿ 0</span></div></div><div class="card"><h3>ที่อยู่จัดส่ง</h3><form id="checkoutForm"><label class="field-label">ชื่อ-นามสกุล</label><input class="field" name="fullname" required placeholder="กรอกชื่อผู้รับ"><label class="field-label">เบอร์โทรศัพท์</label><input class="field" name="phone" required pattern="[0-9+ -]{9,15}" placeholder="08x-xxx-xxxx"><label class="field-label">ที่อยู่</label><textarea class="field" name="address" rows="3" required placeholder="บ้านเลขที่ ถนน ตำบล อำเภอ จังหวัด รหัสไปรษณีย์"></textarea><h3>วิธีการชำระเงิน</h3><label class="payment-option"><input type="radio" name="payment" value="โอนเงินผ่านธนาคาร" checked> โอนเงินผ่านธนาคาร</label><label class="payment-option"><input type="radio" name="payment" value="เก็บเงินปลายทาง"> เก็บเงินปลายทาง (COD)</label><label class="payment-option"><input type="radio" name="payment" value="บัตรเครดิต/เดบิต"> บัตรเครดิต/เดบิต (ตัวอย่าง)</label><button class="btn" type="submit" style="width:100%">ยืนยันการสั่งซื้อ →</button><p class="muted" style="font-size:11px">เดโมสำหรับทดลองใช้งาน ยังไม่มีการเรียกเก็บเงินจริง</p></form></div></div></div></section>
+
+<section id="admin" class="page"><div class="panel admin-layout"><aside class="admin-sidebar"><div class="admin-brand"><div class="round">🌱</div><b>เกษตรสุขใจ</b><br><small>ผู้ขาย</small></div><div class="admin-link">⌂　หน้าหลัก</div><div class="admin-link active">▣　จัดการสินค้า</div><div class="admin-link" data-page="profile">▤　คำสั่งซื้อ</div><div class="admin-link" data-page="profile">♙　ข้อมูลร้านค้า</div><div class="admin-link">▥　รายงานยอดขาย</div><div class="admin-link">⚙　ตั้งค่า</div></aside><div class="admin-main"><div class="sectionhead"><h2>จัดการสินค้า</h2><button class="btn" id="addProductBtn">＋ เพิ่มสินค้า</button></div><div class="muted" style="margin-bottom:15px">จัดการรายการสินค้า ราคา และจำนวนคงเหลือของร้านคุณ</div><div class="table-wrap"><table class="data-table"><thead><tr><th>สินค้า</th><th>ราคา</th><th>คงเหลือ</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody id="adminRows"></tbody></table></div><div class="section" style="padding-left:0"><h3>ภาพรวมร้านค้า</h3><div class="info-grid"><div class="stat">สินค้าทั้งหมด<strong id="statProducts">0</strong></div><div class="stat">มูลค่าสต็อก<strong id="statStock">฿ 0</strong></div><div class="stat">คำสั่งซื้อ<strong id="statOrders">0 รายการ</strong></div></div></div></div></div></section>
+
+<section id="profile" class="page"><div class="panel profile-layout"><aside class="profile-side"><div class="profile-person"><div class="big-avatar">👩🏻</div><b>กาญจนา ศรีจันทร์</b><div class="muted" style="font-size:12px">ผู้ใช้ทั่วไป</div></div><nav><div class="profile-link active">♙　ข้อมูลส่วนตัว</div><div class="profile-link" data-page="checkout">▤　คำสั่งซื้อของฉัน</div><div class="profile-link" data-page="admin">♧　จัดการร้านค้า</div><div class="profile-link">♡　รายการโปรด</div><div class="profile-link">⚙　ตั้งค่า</div></nav></aside><div class="profile-main"><div class="card"><div class="sectionhead"><h3>ข้อมูลส่วนตัว</h3><button class="btn secondary small" id="editProfile">แก้ไขข้อมูล</button></div><p><b>ชื่อ-นามสกุล</b><br><span id="profileName">กาญจนา ศรีจันทร์</span></p><p><b>อีเมล</b><br><span id="profileEmail">kanjana.sri@spumail.net</span></p><p><b>เบอร์โทรศัพท์</b><br><span id="profilePhone">081-234-5678</span></p><p><b>ที่อยู่</b><br><span id="profileAddress">123 หมู่ 4 ต.ในเมือง อ.เมือง ขอนแก่น 40000</span></p></div><div class="card"><h3>สถิติการซื้อขาย</h3><div class="info-grid"><div class="stat">คำสั่งซื้อทั้งหมด<strong id="profileOrders">0 รายการ</strong></div><div class="stat">ยอดใช้จ่ายทั้งหมด<strong id="profileSpend">฿ 0</strong></div><div class="stat">สินค้าที่ชอบ<strong id="profileFavorites">0 รายการ</strong></div></div></div><div class="card"><h3>ประวัติคำสั่งซื้อ</h3><div id="orderHistory" class="muted">ยังไม่มีคำสั่งซื้อ</div></div></div></div></section>
+</main>
+<div class="footer">🌱 SeedShop — Grow Together · ตลาดเมล็ดพันธุ์เพื่อการเกษตรที่ยั่งยืน</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<div class="modal-backdrop" id="authBackdrop" aria-hidden="true">
+  <div class="modal auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal-head">
+      <div><div class="auth-brand">🌿 SeedShop</div><h3 id="authTitle">เข้าสู่ระบบ</h3></div>
+      <button class="close" id="closeAuth" type="button" aria-label="ปิด">×</button>
+    </div>
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab active" data-auth-tab="login">เข้าสู่ระบบ</button>
+      <button type="button" class="auth-tab" data-auth-tab="register">สมัครสมาชิก</button>
+    </div>
+    <form id="loginForm" class="auth-form">
+      <label class="field-label" for="loginEmail">อีเมล</label>
+      <input class="field" id="loginEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+      <label class="field-label" for="loginPassword">รหัสผ่าน</label>
+      <input class="field" id="loginPassword" name="password" type="password" autocomplete="current-password" minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร" required>
+      <p class="auth-error" id="loginError" role="alert"></p>
+      <button class="btn auth-submit" type="submit">เข้าสู่ระบบ</button>
+      <p class="auth-note">สำหรับเดโมนี้ บัญชีจะถูกเก็บไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น</p>
+    </form>
+    <form id="registerForm" class="auth-form" hidden>
+      <label class="field-label" for="registerName">ชื่อ-นามสกุล</label>
+      <input class="field" id="registerName" name="name" autocomplete="name" placeholder="ชื่อของคุณ" required>
+      <label class="field-label" for="registerEmail">อีเมล</label>
+      <input class="field" id="registerEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+      <label class="field-label" for="registerPassword">รหัสผ่าน</label>
+      <input class="field" id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร" required>
+      <label class="field-label" for="registerConfirm">ยืนยันรหัสผ่าน</label>
+      <input class="field" id="registerConfirm" name="confirm" type="password" autocomplete="new-password" minlength="6" placeholder="กรอกรหัสผ่านอีกครั้ง" required>
+      <p class="auth-error" id="registerError" role="alert"></p>
+      <button class="btn auth-submit" type="submit">สมัครสมาชิก</button>
+      <p class="auth-note">อย่าใช้รหัสผ่านจริงที่ใช้กับบริการอื่น เพราะระบบนี้เป็นเพียงตัวอย่างฝั่งหน้าเว็บ</p>
+    </form>
+    <div class="auth-logged-in" id="loggedInPanel" hidden>
+      <div class="auth-success-icon">✓</div>
+      <h3 id="loggedInName">คุณเข้าสู่ระบบแล้ว</h3>
+      <p class="muted" id="loggedInEmail"></p>
+      <button class="btn secondary auth-submit" id="goProfile" type="button">ไปหน้าโปรไฟล์</button>
+      <button class="btn auth-submit" id="logoutButton" type="button">ออกจากระบบ</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h3 id="modalTitle">เพิ่มสินค้า</h3><button class="close" id="closeModal">×</button></div><form id="productForm"><input type="hidden" name="id"><label class="field-label">ชื่อสินค้า</label><input class="field" name="name" required><label class="field-label">หมวดหมู่</label><select class="field" name="category"><option>ผักสวนครัว</option><option>พืชไร่</option><option>ไม้ผล</option><option>ดอกไม้</option><option>สมุนไพร</option></select><label class="field-label">ราคา (บาท)</label><input class="field" name="price" type="number" min="1" required><label class="field-label">จำนวนคงเหลือ</label><input class="field" name="stock" type="number" min="0" required><label class="field-label">URL รูปภาพ (ไม่บังคับ)</label><input class="field" name="image" type="url" placeholder="https://..."><button class="btn" style="width:100%" type="submit">บันทึกสินค้า</button></form></div></div>
+
+<script src="script.js"></script>
+</body>
+</html>
